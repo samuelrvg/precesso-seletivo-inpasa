@@ -36,4 +36,4 @@ Na mesma tela tem que ter a opção para criar um novo produto.
 - Publicar o back-end e front-end em algum serviço gratuito de 30 dias como Azure, Google Cloud ou Amazon.
 - Máscara para valor monetário
 
-#### Prazo para entrega 13/06/2020 12:00
+#### Prazo para entrega 13/06/2020 18:00 - Fazer um fork deste readme e um pull request quando terminar.
