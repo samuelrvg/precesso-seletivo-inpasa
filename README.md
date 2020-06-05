@@ -28,6 +28,7 @@ Na mesma tela tem que ter a opção para criar um novo produto.
 
 - Se todos os itens acima estão funcionando corretamente.
 - Organização do código.
+- Usar banco Sql Server ou Oracle pode ou não ser local na máquina.
 
 ### Diferenciais mas não obrigatório:
 
