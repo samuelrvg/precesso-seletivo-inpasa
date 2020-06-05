@@ -10,6 +10,7 @@ O **Produto** deve ter os seguintes atributos:
 - Preco
 - Descricao
 - TipoProduto
+- DataCadastro
 
 #### Web Api:
 
@@ -35,6 +36,7 @@ Na mesma tela tem que ter a opção para criar um novo produto.
 - Adicionar um relacionamento ao produto, visto que tem apenas uma entidade do tipo produto.
 - Adicionar validações no front-end e back-end.
 - Publicar o back-end e front-end em algum serviço gratuito de 30 dias como Azure, Google Cloud ou Amazon.
-- Máscara para valor monetário
+- Máscara para valor monetário.
+- Adicionar features que não consta na descrição.
 
-#### Prazo para entrega 14/06/2020 22:00 - Fazer um [fork deste readme e um pull request](https://blog.da2k.com.br/2015/02/04/git-e-github-do-clone-ao-pull-request/) quando terminar.
+#### Prazo para entrega 14/06/2020 22:00 - Fazer um [fork e pull request](https://blog.da2k.com.br/2015/02/04/git-e-github-do-clone-ao-pull-request/) quando terminar.
