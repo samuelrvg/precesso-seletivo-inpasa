@@ -39,4 +39,4 @@ Na mesma tela tem que ter a opção para criar um novo produto.
 - Máscara para valor monetário.
 - Adicionar features que não consta na descrição.
 
-#### Prazo para entrega 14/06/2020 22:00 - Fazer um [fork e pull request](https://blog.da2k.com.br/2015/02/04/git-e-github-do-clone-ao-pull-request/) quando terminar.
+#### Prazo para entrega 13/06/2020 14:00 - Fazer um [fork e pull request](https://blog.da2k.com.br/2015/02/04/git-e-github-do-clone-ao-pull-request/) quando terminar.
