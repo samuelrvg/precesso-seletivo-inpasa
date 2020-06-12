@@ -29,6 +29,7 @@ Na mesma tela tem que ter a opção para criar um novo produto.
 
 - Git
 - Entity Framework
+- **JavaScript Básico**
 - Orientação a Objetos
 - Diferenças TypeScript VS JavaScript
 - Diferença entre campo e propriedade nas classes do CSharp
