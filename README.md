@@ -25,6 +25,25 @@ Observação: Caso queira adicionar outros Frameworks para complementar os recur
 É preciso que tenha uma lista de produtos, e para cada item da lista, ter a opção de Excluir e Atualizar o produto.
 Na mesma tela tem que ter a opção para criar um novo produto.
 
+#### Estudar
+
+- Git
+- Entity Framework
+- Orientação a Objetos
+- Diferenças TypeScript VS JavaScript
+- Diferença entre campo e propriedade nas classes do CSharp
+- Diferença de Método com retorno e sem retorno
+- Conceitos de REST e RESTFULL ou diferenças
+
+#### Referências para estudo
+
+- pt.stackoverflow
+- Google.com
+- Youtube
+- Cursos pagos (udemy...)
+
+Obs: Não se limite as referências acima, tiver outras fontes além dessas, pode usar.
+
 ### O que sera avaliado
 
 - Se todos os itens acima estão funcionando corretamente.
