@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "G7y3SHiIBymIadAYR2CICfsbrPVf3mypbDvWeiu8Jy9Ol8iOdOxpNRoAO4yIy8kTOAXa5gRii7s59w4wVXV+og==",
+  "dgSpecHash": "02yqtal9io5xLNhFrxuasqeclU0I0qmhqlAzgEJJYjjU6nEbDMcftiHBh7HaTtLk1dZ2DT+bk3DmB5PlbUS49g==",
   "success": true,
   "projectFilePath": "C:\\Users\\H-X95\\source\\repos\\shorydeco\\precesso-seletivo-inpasa\\WebApi-Core\\WebApi-Core\\WebApi-Core.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\H-X95\\.nuget\\packages\\dapper\\2.0.35\\dapper.2.0.35.nupkg.sha512",
     "C:\\Users\\H-X95\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\H-X95\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\H-X95\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
@@ -96,7 +97,7 @@
     "C:\\Users\\H-X95\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
     "C:\\Users\\H-X95\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
     "C:\\Users\\H-X95\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
-    "C:\\Users\\H-X95\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
+    "C:\\Users\\H-X95\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
     "C:\\Users\\H-X95\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\H-X95\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\H-X95\\.nuget\\packages\\system.reflection.typeextensions\\4.3.0\\system.reflection.typeextensions.4.3.0.nupkg.sha512",

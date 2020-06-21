@@ -59,5 +59,6 @@ C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebAp
 C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.Design.dll
 C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.Design.dll
 C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\bin\Debug\netcoreapp3.1\Dapper.dll
 C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\obj\Debug\netcoreapp3.1\WebApi-Core.csproj.CoreCompileInputs.cache
 C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\obj\Debug\netcoreapp3.1\WebApi-Core.MvcApplicationPartsAssemblyInfo.cache
