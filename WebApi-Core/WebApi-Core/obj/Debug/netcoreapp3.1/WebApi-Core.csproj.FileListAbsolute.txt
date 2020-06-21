@@ -49,3 +49,4 @@ C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebAp
 C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\obj\Debug\netcoreapp3.1\WebApi-Core.csproj.CopyComplete
+C:\Users\H-X95\source\repos\shorydeco\precesso-seletivo-inpasa\WebApi-Core\WebApi-Core\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.InMemory.dll
