@@ -11,5 +11,6 @@ namespace WebApi_Core.Controllers
     [ApiController]
     public class ProdutoController : ControllerBase
     {
+
     }
 }
