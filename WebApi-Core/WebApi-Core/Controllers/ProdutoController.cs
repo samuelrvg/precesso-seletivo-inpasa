@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,27 @@ namespace WebApi_Core.Controllers
                 result = con.Query<Produto>("SELECT * FROM Produtos");
             }
             return result;
+        }
+
+        [HttpGet("produto/{id}")]
+        public async Task<ActionResult<Produto>> GetById(int id)
+        {
+            var produto = await _context.Produtos.FindAsync(id);
+            if (produto == null)
+            {
+                return NotFound();
+            }
+            return produto;
+        }
+
+        [HttpPost("adicionar")]
+        public async Task<IActionResult> Create(Produto produto)
+        {
+            _context.Produtos.Add(produto);
+            await _context.SaveChangesAsync();
+            // Retorna o produto após a criação;
+            return CreatedAtAction(nameof(GetById), 
+                new { id = produto.ProdutoId }, produto);
         }
 
 

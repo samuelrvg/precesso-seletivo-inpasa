@@ -12,6 +12,7 @@ namespace WebApi_Core.Data
         public Context(DbContextOptions<Context> options) : base(options) {}
         
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Tipo> Tipos { get; set; }
 
     }
 }
