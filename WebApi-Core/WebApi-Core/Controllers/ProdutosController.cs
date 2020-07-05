@@ -27,7 +27,7 @@ namespace WebApi_Core.Controllers
         }
 
         // GET: api/Produtos
-        [HttpGet("produtos")]
+        [HttpGet]
         public IEnumerable<Produto> GetAll()
         {
             IEnumerable<Produto> result;
@@ -41,16 +41,15 @@ namespace WebApi_Core.Controllers
 
         // GET: api/Produtos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Produto>> GetProduto(int id)
+        public IEnumerable<Produto> GetProduto(int id)
         {
-            var produto = await _context.Produtos.FindAsync(id);
-
-            if (produto == null)
+            IEnumerable<Produto> result;
+            using (SqlConnection con = new SqlConnection(
+                _configuration.GetConnectionString("CConnection")))
             {
-                return NotFound();
+                result = con.Query<Produto>($"SELECT * FROM Produtos WHERE ProdutoId = '{id}'");
             }
-
-            return produto;
+            return result;
         }
 
         // PUT: api/Produtos/5
