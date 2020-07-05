@@ -38,12 +38,38 @@ namespace WebApi_Core.Migrations
                     b.Property<double>("Preco")
                         .HasColumnType("float");
 
-                    b.Property<string>("TipoProduto")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TipoId")
+                        .HasColumnType("int");
 
                     b.HasKey("ProdutoId");
 
+                    b.HasIndex("TipoId");
+
                     b.ToTable("Produtos");
+                });
+
+            modelBuilder.Entity("WebApi_Core.Models.Tipo", b =>
+                {
+                    b.Property<int>("TipoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("TipoNome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TipoId");
+
+                    b.ToTable("Tipos");
+                });
+
+            modelBuilder.Entity("WebApi_Core.Models.Produto", b =>
+                {
+                    b.HasOne("WebApi_Core.Models.Tipo", "TipoProduto")
+                        .WithMany()
+                        .HasForeignKey("TipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
