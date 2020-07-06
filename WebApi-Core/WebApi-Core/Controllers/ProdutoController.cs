@@ -11,16 +11,18 @@ using WebApi_Core.Models;
 
 using Microsoft.Data.SqlClient;
 using Dapper;
+using Newtonsoft.Json.Serialization;
+using System.Security.Cryptography;
 
 namespace WebApi_Core.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/produtos")]
     [ApiController]
-    public class ProdutosController : ControllerBase
+    public class ProdutoController : ControllerBase
     {
         private readonly Context _context;
         private readonly IConfiguration _configuration;
-        public ProdutosController(Context context, IConfiguration configuration)
+        public ProdutoController(Context context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
@@ -53,8 +55,6 @@ namespace WebApi_Core.Controllers
         }
 
         // PUT: api/Produtos/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduto(int id, Produto produto)
         {
@@ -85,12 +85,20 @@ namespace WebApi_Core.Controllers
         }
 
         // POST: api/Produtos
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Produto>> PostProduto(Produto produto)
         {
             _context.Produtos.Add(produto);
+
+            if (TipoExists(produto.TipoId))
+            {
+                produto.TipoProduto = _context.Tipos.Find(produto.TipoId);
+            } 
+            else
+            {
+                return NotFound("Tipo de produto não cadastrado.");
+            }           
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProduto", new { id = produto.ProdutoId }, produto);
@@ -116,5 +124,11 @@ namespace WebApi_Core.Controllers
         {
             return _context.Produtos.Any(e => e.ProdutoId == id);
         }
+
+        private bool TipoExists(int id)
+        {
+            return _context.Tipos.Any(e => e.TipoId == id);
+        }
+
     }
 }
