@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,47 +11,50 @@ using WebApi_Core.Models;
 
 namespace WebApi_Core.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/tipos")]
     [ApiController]
     public class TipoController : ControllerBase
     {
         private readonly Context _context;
+        private readonly IConfiguration _configuration;
 
-        public TipoController(Context context)
+        public TipoController(Context context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
-        // GET: api/Tipo
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tipo>>> GetTipos()
+        [HttpGet] // GET ALL
+        public IEnumerable<Tipo> GetAll()
         {
-            return await _context.Tipos.ToListAsync();
-        }
-
-        // GET: api/Tipo/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Tipo>> GetTipo(int id)
-        {
-            var tipo = await _context.Tipos.FindAsync(id);
-
-            if (tipo == null)
+            IEnumerable<Tipo> result;
+            using (SqlConnection con = new SqlConnection(
+                _configuration.GetConnectionString("CConnection")))
             {
-                return NotFound();
+                result = con.Query<Tipo>("SELECT * FROM Tipos");
             }
-
-            return tipo;
+            return result;
         }
 
-        // PUT: api/Tipo/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpGet("{id}")] // GET
+        public IEnumerable<Tipo> GetProduto(int id)
+        {
+            IEnumerable<Tipo> result;
+            using (SqlConnection con = new SqlConnection(
+                _configuration.GetConnectionString("CConnection")))
+            {
+                result = con.Query<Tipo>($"SELECT * FROM Tipos WHERE TipoId = '{id}'");
+            }
+            return result;
+        }
+
+        
+        [HttpPut("{id}")] // PUT
         public async Task<IActionResult> PutTipo(int id, Tipo tipo)
         {
             if (id != tipo.TipoId)
             {
-                return BadRequest();
+                return BadRequest("Tipo não existe");
             }
 
             _context.Entry(tipo).State = EntityState.Modified;
@@ -72,20 +78,24 @@ namespace WebApi_Core.Controllers
             return NoContent();
         }
 
-        // POST: api/Tipo
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        
+
+        [HttpPost] // POST
         public async Task<ActionResult<Tipo>> PostTipo(Tipo tipo)
         {
+            if (TipoNomeExists(tipo.TipoNome))
+            {
+                return NotFound("Tipo já existente.");
+            }
+            
             _context.Tipos.Add(tipo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTipo", new { id = tipo.TipoId }, tipo);
+            return NotFound("Produto Cadastrado! ");
         }
 
-        // DELETE: api/Tipo/5
-        [HttpDelete("{id}")]
+
+        [HttpDelete("{id}")] // DELETE
         public async Task<ActionResult<Tipo>> DeleteTipo(int id)
         {
             var tipo = await _context.Tipos.FindAsync(id);
@@ -103,6 +113,11 @@ namespace WebApi_Core.Controllers
         private bool TipoExists(int id)
         {
             return _context.Tipos.Any(e => e.TipoId == id);
+        }
+
+        private bool TipoNomeExists(string nome)
+        {
+            return _context.Tipos.Any(e => e.TipoNome == nome);
         }
     }
 }

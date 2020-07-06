@@ -4,5 +4,6 @@
     {
         public int TipoId { get; set; }
         public string TipoNome { get; set; }
+
     }
 }
