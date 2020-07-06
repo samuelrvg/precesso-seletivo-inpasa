@@ -1,18 +1,13 @@
-﻿using System;
+﻿using Dapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using WebApi_Core.Data;
 using WebApi_Core.Models;
-
-using Microsoft.Data.SqlClient;
-using Dapper;
-using Newtonsoft.Json.Serialization;
-using System.Security.Cryptography;
 
 namespace WebApi_Core.Controllers
 {
@@ -22,14 +17,14 @@ namespace WebApi_Core.Controllers
     {
         private readonly Context _context;
         private readonly IConfiguration _configuration;
+
         public ProdutoController(Context context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
         }
 
-        // GET: api/Produtos
-        [HttpGet]
+        [HttpGet]// GET: api/Produtos
         public IEnumerable<Produto> GetAll()
         {
             IEnumerable<Produto> result;
@@ -41,8 +36,7 @@ namespace WebApi_Core.Controllers
             return result;
         }
 
-        // GET: api/Produtos/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] // GET: api/Produtos/5
         public IEnumerable<Produto> GetProduto(int id)
         {
             IEnumerable<Produto> result;
@@ -54,8 +48,7 @@ namespace WebApi_Core.Controllers
             return result;
         }
 
-        // PUT: api/Produtos/5
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] // PUT: api/Produtos/5
         public async Task<IActionResult> PutProduto(int id, Produto produto)
         {
             if (id != produto.ProdutoId)
@@ -84,8 +77,7 @@ namespace WebApi_Core.Controllers
             return NoContent();
         }
 
-        // POST: api/Produtos
-        [HttpPost]
+        [HttpPost]// POST: api/Produtos
         public async Task<ActionResult<Produto>> PostProduto(Produto produto)
         {
             _context.Produtos.Add(produto);
@@ -93,25 +85,23 @@ namespace WebApi_Core.Controllers
             if (TipoExists(produto.TipoId))
             {
                 produto.TipoProduto = _context.Tipos.Find(produto.TipoId);
-            } 
+            }
             else
             {
                 return NotFound("Tipo de produto não cadastrado.");
-            }           
+            }
 
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetProduto", new { id = produto.ProdutoId }, produto);
         }
 
-        // DELETE: api/Produtos/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] // DELETE: api/Produtos/5
         public async Task<ActionResult<Produto>> DeleteProduto(int id)
         {
             var produto = await _context.Produtos.FindAsync(id);
             if (produto == null)
             {
-                return NotFound();
+                return NotFound("Produto não encontrado.");
             }
 
             _context.Produtos.Remove(produto);
@@ -129,6 +119,5 @@ namespace WebApi_Core.Controllers
         {
             return _context.Tipos.Any(e => e.TipoId == id);
         }
-
     }
 }
