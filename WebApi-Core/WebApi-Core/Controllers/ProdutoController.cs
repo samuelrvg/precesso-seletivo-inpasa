@@ -30,12 +30,12 @@ namespace WebApi_Core.Controllers
             using (var con = new SqlConnection(
                 _configuration.GetConnectionString("CConnection")))
             {
-                IEnumerable<Produto> 
+                IEnumerable<Produto>
                     result = con.Query<Produto>
                         ("SELECT * FROM Produtos");
 
                 return result;
-            }            
+            }
         }
 
         [HttpGet("{id}")] // GET: api/Produtos/5

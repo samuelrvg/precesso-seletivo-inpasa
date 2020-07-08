@@ -48,7 +48,7 @@ namespace WebApi_Core.Controllers
             return result;
         }
 
-        
+
         [HttpPut("{id}")] // PUT
         public async Task<IActionResult> PutTipo(int id, Tipo tipo)
         {
@@ -78,7 +78,7 @@ namespace WebApi_Core.Controllers
             return NoContent();
         }
 
-        
+
 
         [HttpPost] // POST
         public async Task<ActionResult<Tipo>> PostTipo(Tipo tipo)
@@ -87,7 +87,7 @@ namespace WebApi_Core.Controllers
             {
                 return NotFound("Tipo já existente.");
             }
-            
+
             _context.Tipos.Add(tipo);
             await _context.SaveChangesAsync();
 

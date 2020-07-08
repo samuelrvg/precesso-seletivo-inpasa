@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApi_Core.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebApi_Core
 {
@@ -19,7 +19,7 @@ namespace WebApi_Core
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Context>(options => 
+            services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CConnection")));
 
             services.AddControllers();
@@ -36,7 +36,7 @@ namespace WebApi_Core
 
             app.UseRouting();
 
-            app.UseAuthorization();            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
