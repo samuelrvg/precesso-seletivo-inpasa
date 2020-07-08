@@ -1,4 +1,6 @@
-﻿namespace WebApi_Core.Models
+﻿using System;
+
+namespace WebApi_Core.Models
 {
     public class Tipo
     {

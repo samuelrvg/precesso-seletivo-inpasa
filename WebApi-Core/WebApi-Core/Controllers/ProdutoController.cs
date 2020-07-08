@@ -27,25 +27,29 @@ namespace WebApi_Core.Controllers
         [HttpGet]// GET: api/Produtos
         public IEnumerable<Produto> GetAll()
         {
-            IEnumerable<Produto> result;
-            using (SqlConnection con = new SqlConnection(
+            using (var con = new SqlConnection(
                 _configuration.GetConnectionString("CConnection")))
             {
-                result = con.Query<Produto>("SELECT * FROM Produtos");
-            }
-            return result;
+                IEnumerable<Produto> 
+                    result = con.Query<Produto>
+                        ("SELECT * FROM Produtos");
+
+                return result;
+            }            
         }
 
         [HttpGet("{id}")] // GET: api/Produtos/5
-        public IEnumerable<Produto> GetProduto(int id)
+        public IEnumerable<Produto> Get(int id)
         {
-            IEnumerable<Produto> result;
-            using (SqlConnection con = new SqlConnection(
+            using (var con = new SqlConnection(
                 _configuration.GetConnectionString("CConnection")))
             {
-                result = con.Query<Produto>($"SELECT * FROM Produtos WHERE ProdutoId = '{id}'");
+                IEnumerable<Produto>
+                    result = con.Query<Produto>
+                        ($"SELECT * FROM Produtos WHERE produtoId = '{id}'");
+
+                return result;
             }
-            return result;
         }
 
         [HttpPut("{id}")] // PUT: api/Produtos/5
@@ -56,7 +60,7 @@ namespace WebApi_Core.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(produto).State = EntityState.Modified;
+            _context.Update(produto);
 
             try
             {
@@ -77,14 +81,14 @@ namespace WebApi_Core.Controllers
             return NoContent();
         }
 
-        [HttpPost]// POST: api/Produtos
+        [HttpPost] // POST: api/Produtos
         public async Task<ActionResult<Produto>> PostProduto(Produto produto)
         {
             _context.Produtos.Add(produto);
 
             if (TipoExists(produto.TipoId))
             {
-                produto.TipoProduto = _context.Tipos.Find(produto.TipoId);
+                produto.TipoProduto = await _context.Tipos.FindAsync(produto.TipoId);
             }
             else
             {
