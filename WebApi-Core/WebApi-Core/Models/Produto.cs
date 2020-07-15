@@ -1,33 +1,17 @@
-﻿using System;
-using WebApi_Core.Data;
+﻿using Dapper.Contrib.Extensions;
+using System;
 
 namespace WebApi_Core.Models
 {
+    [Table("dbo.Produtos")]
     public class Produto
     {
+        [Key]
         public int ProdutoId { get; set; }
         public string Nome { get; set; }
         public double Preco { get; set; }
         public string Descricao { get; set; }
         public DateTime DataCadastro { get; set; }
-
-        public int TipoId { get; set; }
-
-        private Tipo _tipoProduto;
-        public Tipo TipoProduto
-        {
-            get
-            {
-                using Context context = new Context();
-                _tipoProduto = context.Tipos.Find(TipoId);
-                return _tipoProduto;
-            }
-            set { _tipoProduto = value; }
-        }
-
-        public Produto()
-        {
-            DataCadastro = DateTime.Now;
-        }
+        public Tipo TipoProduto { get; set; }
     }
 }

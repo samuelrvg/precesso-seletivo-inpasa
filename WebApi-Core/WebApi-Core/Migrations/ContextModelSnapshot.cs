@@ -38,10 +38,12 @@ namespace WebApi_Core.Migrations
                     b.Property<double>("Preco")
                         .HasColumnType("float");
 
-                    b.Property<int>("TipoId")
+                    b.Property<int?>("TipoProdutoTipoId")
                         .HasColumnType("int");
 
                     b.HasKey("ProdutoId");
+
+                    b.HasIndex("TipoProdutoTipoId");
 
                     b.ToTable("Produtos");
                 });
@@ -59,6 +61,13 @@ namespace WebApi_Core.Migrations
                     b.HasKey("TipoId");
 
                     b.ToTable("Tipos");
+                });
+
+            modelBuilder.Entity("WebApi_Core.Models.Produto", b =>
+                {
+                    b.HasOne("WebApi_Core.Models.Tipo", "TipoProduto")
+                        .WithMany()
+                        .HasForeignKey("TipoProdutoTipoId");
                 });
 #pragma warning restore 612, 618
         }

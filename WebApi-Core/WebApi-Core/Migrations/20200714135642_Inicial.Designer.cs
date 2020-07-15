@@ -10,7 +10,7 @@ using WebApi_Core.Data;
 namespace WebApi_Core.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200621044553_Inicial")]
+    [Migration("20200714135642_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,12 +40,36 @@ namespace WebApi_Core.Migrations
                     b.Property<double>("Preco")
                         .HasColumnType("float");
 
-                    b.Property<string>("TipoProduto")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("TipoProdutoTipoId")
+                        .HasColumnType("int");
 
                     b.HasKey("ProdutoId");
 
+                    b.HasIndex("TipoProdutoTipoId");
+
                     b.ToTable("Produtos");
+                });
+
+            modelBuilder.Entity("WebApi_Core.Models.Tipo", b =>
+                {
+                    b.Property<int>("TipoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("TipoNome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TipoId");
+
+                    b.ToTable("Tipos");
+                });
+
+            modelBuilder.Entity("WebApi_Core.Models.Produto", b =>
+                {
+                    b.HasOne("WebApi_Core.Models.Tipo", "TipoProduto")
+                        .WithMany()
+                        .HasForeignKey("TipoProdutoTipoId");
                 });
 #pragma warning restore 612, 618
         }
