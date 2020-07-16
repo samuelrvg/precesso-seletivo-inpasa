@@ -9,8 +9,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using WebApi_Core.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebApi_Core.Controllers
 {
     [Route("api/[controller]")]
