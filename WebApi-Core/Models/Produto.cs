@@ -13,5 +13,10 @@ namespace WebApi_Core.Models
         public string Descricao { get; set; }
         public DateTime DataCadastro { get; set; }
         public Tipo TipoProduto { get; set; }
+
+        public Produto()
+        {
+            DataCadastro = DateTime.Now;
+        }
     }
 }
