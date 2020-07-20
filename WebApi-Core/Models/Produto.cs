@@ -12,11 +12,7 @@ namespace WebApi_Core.Models
         public string Nome { get; set; }
         public double Preco { get; set; }
         public string Descricao { get; set; }
-        public DateTime DataCadastro { get; set; }     
+        public DateTime DataCadastro { get; set; }
 
-        public Produto()
-        {
-            DataCadastro = DateTime.Now;
-        }
     }
 }
