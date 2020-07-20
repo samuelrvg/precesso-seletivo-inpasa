@@ -31,7 +31,7 @@ namespace WebApi_Core.Controllers
         }
 
         [HttpGet]
-        public IEnumerable GetProdutos()
+        public IEnumerable GetAll()
         {
             return conexao.Conexao(_configuration)
                 .Query("SELECT A.ProdutoId,  " +
@@ -59,7 +59,7 @@ namespace WebApi_Core.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Produto> PostProduto(Produto produto)
+        public ActionResult<Produto> Create(Produto produto)
         {
             if (ExisteTipoProduto(produto.TipoProdutoId))
             {
@@ -75,7 +75,7 @@ namespace WebApi_Core.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Produto> UpdateProduto(int id, Produto produto)
+        public ActionResult<Produto> Update(int id, Produto produto)
         {
             if (id == produto.ProdutoId)
             {
@@ -83,10 +83,14 @@ namespace WebApi_Core.Controllers
                 {
                     if (ExisteTipoProduto(produto.TipoProdutoId))
                     {
-                        var proOriginal = conexao.Conexao(_configuration).Get<Produto>(produto.ProdutoId);
-                        produto.DataCadastro = proOriginal.DataCadastro;
-                        conexao.Conexao(_configuration).Update<Produto>(produto);
-                        return Ok(Get(produto.ProdutoId));
+                        if (!ExisteProdutoNome(produto.Nome))
+                        {
+                            var proOriginal = conexao.Conexao(_configuration).Get<Produto>(produto.ProdutoId);
+                            produto.DataCadastro = proOriginal.DataCadastro;
+                            conexao.Conexao(_configuration).Update<Produto>(produto);
+                            return Ok(Get(produto.ProdutoId));
+                        }
+                        return NotFound("Erro! Já Existe um produto cadastrado com esse nome!");  
                     }
                     return NotFound("TipoProduto não existe.");
                 }
@@ -96,7 +100,7 @@ namespace WebApi_Core.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Produto> DeleteProduto(int id)
+        public ActionResult<Produto> Delete(int id)
         {
             if (ExisteProduto(id))
             {
