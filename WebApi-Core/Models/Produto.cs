@@ -8,11 +8,11 @@ namespace WebApi_Core.Models
     {
         [Key]
         public int ProdutoId { get; set; }
+        public int TipoProdutoId { get; set; }
         public string Nome { get; set; }
         public double Preco { get; set; }
         public string Descricao { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public Tipo TipoProduto { get; set; }
+        public DateTime DataCadastro { get; set; }     
 
         public Produto()
         {

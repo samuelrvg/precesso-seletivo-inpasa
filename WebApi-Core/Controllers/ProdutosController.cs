@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 using Dapper.Contrib.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic.CompilerServices;
+using WebApi_Core.Data;
 using WebApi_Core.Models;
 
 namespace WebApi_Core.Controllers
@@ -15,31 +20,59 @@ namespace WebApi_Core.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-
-        private readonly IConfiguration _config;
-        public ProdutosController(IConfiguration config)
+        
+        ConexaoDb conexao = new ConexaoDb();
+        private readonly IConfiguration _configuration;
+        private readonly Context _context;
+        public ProdutosController(IConfiguration configuration, Context context)
         {
-            _config = config;
-        }
-
-        private SqlConnection ConexaoDb()
-        {
-            return new SqlConnection(_config.GetConnectionString("Conexaodb"));
-        }
+            _configuration = configuration;
+            _context = context;
+        }        
 
         [HttpGet]
-        public IEnumerable<Produto> GetProdutos()
+        public IEnumerable GetProdutos()
         {
-            var conexao = ConexaoDb();
+            return conexao.Conexao(_configuration)
+                .Query("SELECT A.ProdutoId,  " +
+                    "A.Nome, A.Descricao," +
+                    " A.Preco, A.DataCadastro, " +
+                    "B.TipoNome " +
+                        "FROM Produtos A INNER JOIN TipoProdutos B ON	A.TipoProdutoId = b.TipoProdutoId");
+        }
+
+        [HttpGet("{id}")]
+        public IEnumerable Get(int id)
+        {
+            if (ExisteProduto(id))
+            {
+                return conexao.Conexao(_configuration)
+                .Query("SELECT A.ProdutoId,  " +
+                    "A.Nome, A.Descricao," +
+                    " A.Preco, A.DataCadastro, " +
+                    "B.TipoNome " +
+                        $"FROM Produtos A INNER JOIN TipoProdutos B ON	A.TipoProdutoId = b.TipoProdutoId WHERE A.ProdutoId = {id}");
+            }
+            return "Produto não existe!";
             
-            return conexao.GetAll<Produto>();
+
         }
 
         [HttpPost]
         public ActionResult<Produto> PostProduto(Produto produto)
         {
-            return Ok();
-        } 
+            conexao.Conexao(_configuration).Insert(produto);
+            return GetProduto(produto.ProdutoId) ;
+        }
 
+        private ActionResult<Produto> GetProduto(int produtoId)
+        {
+            return conexao.Conexao(_configuration).Get<Produto>(produtoId);
+        }
+
+        public bool ExisteProduto(int id)
+        {
+            return _context.Produtos.Any(x => x.ProdutoId == id);
+        }
     }
 }

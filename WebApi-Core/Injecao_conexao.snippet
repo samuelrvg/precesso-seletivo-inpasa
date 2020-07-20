@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Injeção de Dependência</Title>
+      <Author>André Felipe</Author>
+      <Description>Injeção de Dependência - IConfiguration </Description>
+      <Shortcut>injcon</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[
+        private readonly IConfiguration _configuration;
+        public ConstructorName(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

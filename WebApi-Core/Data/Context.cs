@@ -6,7 +6,7 @@ namespace WebApi_Core.Data
     public class Context : DbContext
     {
         public DbSet<Produto> Produtos { get; set; }
-        public DbSet<Tipo> Tipos { get; set; }
+        public DbSet<TipoProduto> TipoProdutos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

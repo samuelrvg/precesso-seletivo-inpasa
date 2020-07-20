@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApi_Core.Data;
+using WebApi_Core.Models;
 
 namespace WebApi_Core
 {
