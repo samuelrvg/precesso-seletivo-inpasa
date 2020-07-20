@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualBasic.CompilerServices;
 using WebApi_Core.Data;
 using WebApi_Core.Models;
 
@@ -34,11 +28,7 @@ namespace WebApi_Core.Controllers
         public IEnumerable GetAll()
         {
             return conexao.Conexao(_configuration)
-                .Query("SELECT A.ProdutoId,  " +
-                    "A.Nome, A.Descricao," +
-                    " A.Preco, A.DataCadastro, " +
-                    "B.TipoNome " +
-                        "FROM Produtos A INNER JOIN TipoProdutos B ON	A.TipoProdutoId = b.TipoProdutoId");
+                .Query("SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId");
         }
 
         [HttpGet("{id}")]
@@ -47,11 +37,7 @@ namespace WebApi_Core.Controllers
             if (ExisteProduto(id))
             {
                 return conexao.Conexao(_configuration)
-                .Query("SELECT A.ProdutoId,  " +
-                    "A.Nome, A.Descricao," +
-                    " A.Preco, A.DataCadastro, " +
-                    "B.TipoNome " +
-                        $"FROM Produtos A INNER JOIN TipoProdutos B ON	A.TipoProdutoId = b.TipoProdutoId WHERE A.ProdutoId = {id}");
+                .Query($"SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId WHERE A.ProdutoId = {id}");
             }
             return "Produto não existe!";
 
