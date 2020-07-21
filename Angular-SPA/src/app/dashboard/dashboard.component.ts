@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
     this.produtoService.getProdutos()
       .subscribe(produtos => {
         this.mensagemService.clear();
-        this.produtos = produtos.slice(1,5);
+        this.produtos = produtos.slice(0,5);
       });
   }
 

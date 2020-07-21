@@ -1,10 +1,14 @@
 <div *ngIf="produto">
 
+  <li *ngFor="let p of produto">
+      {{p.Nome}}
+  </li>
+
   <h2>{{produto.Nome | uppercase}} Details</h2>
   <div><span>id: </span>{{produto.ProdutoId}}</div>
   <div>
     <label>name:
-      <input [(ngModel)]="produto.Nome" placeholder=""/>
+      <input [(ngModel)]="produto.DataCadastro" placeholder=""/>
     </label>
   </div>
 

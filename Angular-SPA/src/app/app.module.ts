@@ -13,6 +13,7 @@ import { MensagemComponent } from './mensagem/mensagem.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProdutoDetalhesComponent } from './produtos/produto-detalhes/produto-detalhes.component';
 import {HttpClientModule} from "@angular/common/http";
+import { ProdutoService } from './produtos/produto.service';
 
 @NgModule({
    declarations: [
@@ -29,7 +30,7 @@ import {HttpClientModule} from "@angular/common/http";
       HttpClientModule
 
    ],
-   providers: [],
+   providers: [ProdutoService],
    bootstrap: [
       AppComponent
    ]
