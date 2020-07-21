@@ -31,11 +31,7 @@ import {HttpClientModule} from "@angular/common/http";
    ],
    providers: [],
    bootstrap: [
-      AppComponent,
-      ProdutosComponent,
-      MensagemComponent,
-      DashboardComponent,
-      ProdutoDetalhesComponent
+      AppComponent
    ]
 })
 export class AppModule { }

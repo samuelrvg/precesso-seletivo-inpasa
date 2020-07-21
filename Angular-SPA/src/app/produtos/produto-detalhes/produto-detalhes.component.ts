@@ -25,9 +25,12 @@ export class ProdutoDetalhesComponent implements OnInit {
 
   getProduto(): void {
     //O operador JavaScript (+) converte a sequência em um número
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = parseInt(this.route.snapshot.paramMap.get('id'));
     this.produtoService.getProduto(id)
-      .subscribe(produto => this.produto = produto);
+      .subscribe(produto => {
+        this.produto = produto
+      });
+
   }
 
   goBack(): void {

@@ -1,8 +1,9 @@
 export interface Produto {
-    produtoId: number;
-    tipoProdutoId: number;
-    nome: string;
-    preco: number;
-    descricao: string;
-    dataCadastro: string;
+    ProdutoId: number;
+    TipoProdutoId: number;
+    Nome: string;
+    Preco: number;
+    Descricao: string;
+    DataCadastro: string;
+    TipoNome: string;
 }

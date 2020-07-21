@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Produto } from './produto';
-import { PRODUTOS } from "./mock-produtos";
 import {ProdutoService} from "./produto.service";
 import {MensagemService} from "../mensagem/mensagem.service";
 
@@ -11,13 +10,12 @@ import {MensagemService} from "../mensagem/mensagem.service";
 })
 export class ProdutosComponent implements OnInit {
 
-
-  // selectedProduto: Produto;
   produtos: Produto[];
 
   constructor(
     private produtoService: ProdutoService,
-    private mensagemService: MensagemService ) { }
+    private mensagemService: MensagemService
+  ) { }
 
   ngOnInit() {
     this.getProdutos();
@@ -26,18 +24,11 @@ export class ProdutosComponent implements OnInit {
   getProdutos(): void {
     this.produtoService.getProdutos()
       .subscribe(produtos => {
-        this.mensagemService.clear()
-        this.mensagemService.add(`Foram encontrados ${produtos.length} produtos.`)
-        this.produtos = produtos
+        this.mensagemService.clear();
+        this.mensagemService.add(`Foram encontrados ${produtos.length} produtos.`);
+        this.produtos = produtos;
+        console.log(produtos);
       });
   }
-
-
-  // Seleciona o produto e retorna.
-  /*onSelect(produto: Produto) : void {
-    this.selectedProduto = produto;
-    this.mensagemService.clear();
-    this.mensagemService.add(`Produto selecionado ID = ${produto.produtoId}`);
-  }*/
 
 }
