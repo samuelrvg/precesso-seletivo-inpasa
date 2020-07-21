@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Produto } from '../produto';
+import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {ProdutoService} from "../produto.service";
+import {Produto} from "../produto";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-produto-detalhes',
@@ -8,11 +11,27 @@ import { Produto } from '../produto';
 })
 export class ProdutoDetalhesComponent implements OnInit {
 
-  @Input() produto: Produto;
+  produto: Produto;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private produtoService: ProdutoService,
+    private location: Location
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.getProduto();
+  }
+
+  getProduto(): void {
+    //O operador JavaScript (+) converte a sequência em um número
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.produtoService.getProduto(id)
+      .subscribe(produto => this.produto = produto);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

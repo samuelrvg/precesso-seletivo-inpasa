@@ -1,10 +1,12 @@
+<!-- Lista produtos -->
 <h2>Meus Produtos</h2>
-<ul class="list-group">
-  <li class="list-group-item " *ngFor="let produto of produtos" 
-    [class.active]="produto === selectedProduto" 
-    (click)="onSelect(produto)">
-    <span class="badge">{{produto.produtoId}}</span> {{produto.nome}}
+
+<ul class="heroes">
+  <li *ngFor="let produto of produtos">
+      <!-- [class.active]="produto === selectedProduto"
+      (click)="onSelect(produto)"> -->
+    <a routerLink="/detalhes/{{produto.produtoId}}">
+      <span class="badge">{{produto.produtoId}}</span> {{produto.nome}}
+    </a>
   </li>
 </ul>
-
-<app-produto-detalhes [produto]="selectedProduto"></app-produto-detalhes> 
