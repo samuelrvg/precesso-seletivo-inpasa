@@ -16,11 +16,19 @@ namespace WebApi_Core
         }
 
         public IConfiguration Configuration { get; }
-
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(
+                options =>
+                {
+                    options.AddPolicy(name: MyAllowSpecificOrigins,
+                        builder =>
+                        {
+                            builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+                        });
+                });
             services.AddDbContext<Context>();
-
             services.AddControllers();
         }
 
@@ -30,6 +38,8 @@ namespace WebApi_Core
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
 
