@@ -23,10 +23,17 @@ export class DashboardComponent implements OnInit {
 
   getProdutos(): void {
     this.produtoService.getProdutos()
-      .subscribe(produtos => {
-        this.mensagemService.clear();
-        this.produtos = produtos.slice(0,5);
-      });
+      .subscribe(
+        (res: Produto[]) => {
+            if (res) {
+              this.mensagemService.clear();
+              this.produtos = res.slice(0,5);
+            }
+        },
+        (err) => {
+            console.log("err", err);
+        }
+    );
   }
 
 }

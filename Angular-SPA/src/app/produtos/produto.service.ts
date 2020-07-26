@@ -22,7 +22,7 @@ export class ProdutoService {
   }
 
   getProduto(id: number): Observable<Produto> {
-    return this.http.get<Produto>(this.apiUrl+`/${id}`);
+    return this.http.get<Produto>(`${this.apiUrl}/${id}`);
   }
 
   private log(mensagem: string) {

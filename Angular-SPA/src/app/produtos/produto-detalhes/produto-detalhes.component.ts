@@ -24,13 +24,14 @@ export class ProdutoDetalhesComponent implements OnInit {
   }
 
   getProduto(): void {
-    let id = parseInt(this.route.snapshot.paramMap.get('id'));
+    const id = parseInt(this.route.snapshot.paramMap.get('id'));
     this.produtoService.getProduto(id)
-      .subscribe(produto => {
-        console.log(produto)
-        this.produto = produto
-
-      });
+      .subscribe(
+        (res: Produto) => {
+            if (res) { this.produto = res; }
+          },
+        (err) => { console.log("err", err); }
+    );      
   }
 
   goBack(): void {

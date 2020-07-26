@@ -23,12 +23,18 @@ export class ProdutosComponent implements OnInit {
 
   getProdutos(): void {
     this.produtoService.getProdutos()
-      .subscribe(produtos => {
-        this.mensagemService.clear();
-        this.mensagemService.add(`Foram encontrados ${produtos.length} produtos.`);
+      .subscribe(
+        (res: Produto[]) => {
+          if(res) {this.produtos = res; }
+        },
+        (err) => {console.log("err", err)} 
+      );
+      /*.subscribe(produtos => {
+        //this.mensagemService.clear();
+        //this.mensagemService.add(`Foram encontrados ${produtos.length} produtos.`);
         this.produtos = produtos;
         console.log(produtos);
-      });
+      });*/
   }
 
 }

@@ -1,8 +1,7 @@
 <div *ngIf="produto">
+  <div *ngFor="let produto of produto" >
 
-  <li *ngFor="let p of produto">
-      {{p.Nome}}
-  </li>
+  
 
   <h2>{{produto.Nome | uppercase}} Details</h2>
   <div><span>id: </span>{{produto.ProdutoId}}</div>
@@ -14,5 +13,6 @@
 
 
   <button (click)="goBack()">go back</button>
-
+  
+  </div>
 </div>

@@ -3,9 +3,11 @@ using System.Collections;
 using System.Linq;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using WebApi_Core.Data;
+using WebApi_Core.Dto.ProdutosDto;
 using WebApi_Core.Models;
 
 namespace WebApi_Core.Controllers
@@ -25,23 +27,23 @@ namespace WebApi_Core.Controllers
         }
 
         [HttpGet]
-        public IEnumerable GetAll()
+        public ActionResult<ProdutoDto> GetAll()
         {
-            return conexao.Conexao(_configuration)
-                .Query("SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId");
+            var result = conexao.Conexao(_configuration)
+                .Query<ProdutoDto>("SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId");
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public IEnumerable Get(int id)
+        public ActionResult<ProdutoDto> Get(int id)
         {
             if (ExisteProduto(id))
             {
-                return conexao.Conexao(_configuration)
-                .Query($"SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId WHERE A.ProdutoId = {id}");
+                var result = conexao.Conexao(_configuration)
+                .Query<ProdutoDto>($"SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId WHERE A.ProdutoId = {id}");
+                return Ok(result);
             }
-            return "Produto não existe!";
-
-
+            return NotFound();
         }
 
         [HttpPost]
