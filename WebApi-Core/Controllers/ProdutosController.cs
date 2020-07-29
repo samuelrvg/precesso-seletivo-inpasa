@@ -16,8 +16,7 @@ namespace WebApi_Core.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-
-        ConexaoDb conexao = new ConexaoDb();
+        readonly ConexaoDb conexao = new ConexaoDb();
         private readonly IConfiguration _configuration;
         private readonly Context _context;
         public ProdutosController(IConfiguration configuration, Context context)
@@ -27,65 +26,66 @@ namespace WebApi_Core.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ProdutoDto> GetAll()
+        public ActionResult<IEnumerable> GetAll()
         {
             var result = conexao.Conexao(_configuration)
-                .Query<ProdutoDto>("SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId");
+                .Query<ListaProdutoDto>("SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId");
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ProdutoDto> Get(int id)
+        public ActionResult<ListaProdutoDto> Get(int id)
         {
             if (ExisteProduto(id))
             {
                 var result = conexao.Conexao(_configuration)
-                .Query<ProdutoDto>($"SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId WHERE A.ProdutoId = {id}");
+                .Query<ListaProdutoDto>($"SELECT * FROM Produtos A INNER JOIN TipoProdutos B ON A.TipoProdutoId = b.TipoProdutoId WHERE A.ProdutoId = {id}");
                 return Ok(result);
             }
-            return NotFound();
+            return NoContent();
         }
 
         [HttpPost]
         public ActionResult<Produto> Create(Produto produto)
         {
-            if (ExisteTipoProduto(produto.TipoProdutoId))
-            {
-                if (!ExisteProdutoNome(produto.Nome))
-                {
-                    produto.DataCadastro = DateTime.Now;
-                    conexao.Conexao(_configuration).Insert(produto);
-                    return CreatedAtAction("Get", new { id = produto.ProdutoId }, produto);
-                }
-                return NotFound("Produto já Cadastrado.");
+            if (!ExisteTipoProduto(produto.TipoProdutoId))
+            {                
+                return NotFound();
             }
-            return NotFound("Tipo Produto não existe.");
+
+            if (!ExisteProdutoNome(produto.Nome))
+            {
+                produto.DataCadastro = DateTime.Now;
+                conexao.Conexao(_configuration).Insert(produto);
+                return CreatedAtAction("Get", new { id = produto.ProdutoId }, produto);
+            }
+
+            return NotFound();
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Produto> Update(int id, Produto produto)
+        public IActionResult Update(int id, EditarProdutoDto EditarProdutoDto)
         {
-            if (id == produto.ProdutoId)
+            if (EditarProdutoDto.ProdutoId != id)
             {
-                if (ExisteProduto(id))
-                {
-                    if (ExisteTipoProduto(produto.TipoProdutoId))
-                    {
-                        if (!ExisteProdutoNome(produto.Nome))
-                        {
-                            var proOriginal = conexao.Conexao(_configuration).Get<Produto>(produto.ProdutoId);
-                            produto.DataCadastro = proOriginal.DataCadastro;
-                            conexao.Conexao(_configuration).Update<Produto>(produto);
-                            return Ok(Get(produto.ProdutoId));
-                        }
-                        return NotFound("Erro! Já Existe um produto cadastrado com esse nome!");  
-                    }
-                    return NotFound("TipoProduto não existe.");
-                }
-                return NotFound("Produto não existe.");
+                return NotFound();
             }
-            return NotFound("Erro! Produto não identificado.");
-        }
+
+            if (!ExisteProduto(id))
+            {
+                return NotFound();
+            }
+
+            if (!ExisteTipoProduto(EditarProdutoDto.TipoProdutoId))
+            {
+                return NotFound();
+            }
+
+            conexao.Conexao(_configuration).Update(EditarProdutoDto);
+            return Ok();
+
+        }            
+        
 
         [HttpDelete("{id}")]
         public ActionResult<Produto> Delete(int id)
@@ -93,7 +93,7 @@ namespace WebApi_Core.Controllers
             if (ExisteProduto(id))
             {
                 conexao.Conexao(_configuration).Delete(new Produto { ProdutoId = id });
-                return Ok("Produto removido com sucesso!");
+                return NoContent();
             }
             return NotFound("Produto não existe.");
         }

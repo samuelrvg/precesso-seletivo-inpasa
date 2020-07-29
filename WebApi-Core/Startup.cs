@@ -30,6 +30,7 @@ namespace WebApi_Core
                 });
             services.AddDbContext<Context>();
             services.AddControllers();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

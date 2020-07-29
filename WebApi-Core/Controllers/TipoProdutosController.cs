@@ -24,13 +24,13 @@ namespace WebApi_Core.Controllers
         }
 
         [HttpGet]
-        public IEnumerable GetAll()
+        public ActionResult<IEnumerable> GetAll()
         {
-            return conexao.Conexao(_configuration)
-                    .Query<TipoProduto>($"SELECT *  FROM TipoProdutos");
+            var result = conexao.Conexao(_configuration).GetAll<TipoProduto>();
+            return Ok(result);
         }
 
-        [HttpGet("{id}")]
+       /* [HttpGet("{id}")]
         public IEnumerable Get(int id)
         {
             if (ExisteTipoProduto(id))
@@ -39,7 +39,7 @@ namespace WebApi_Core.Controllers
                     .Query<TipoProduto>($"SELECT *  FROM TipoProdutos WHERE TipoProdutoId = {id}");
             }
             return "TipoProduto não existe!";
-        }
+        } */
 
         [HttpPost]
         public ActionResult<TipoProduto> Create(TipoProduto tipoProduto)
@@ -62,7 +62,7 @@ namespace WebApi_Core.Controllers
                     if (!ExisteTipoProdutoNome(tipoProduto.TipoNome))
                     {
                         conexao.Conexao(_configuration).Update(tipoProduto);
-                        return Ok(Get(tipoProduto.TipoProdutoId));
+                        return Ok();
                     }
                     return NotFound("TipoProduto com esse nome já está cadastrado.");
                 }

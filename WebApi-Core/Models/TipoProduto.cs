@@ -8,6 +8,5 @@ namespace WebApi_Core.Models
         [Key]
         public int TipoProdutoId { get; set; }
         public string TipoNome { get; set; }
-
     }
 }
