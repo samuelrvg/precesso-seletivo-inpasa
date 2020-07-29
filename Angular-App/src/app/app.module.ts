@@ -1,3 +1,4 @@
+import { TipoprodutosComponent } from './Produtos/tipoprodutos/tipoprodutos.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, NgModel, NgControl } from '@angular/forms';
@@ -19,7 +20,8 @@ registerLocaleData(localePt);
   declarations: [
     AppComponent,
     AddProdutoComponent,
-    ProdutosListComponent
+    ProdutosListComponent,
+    TipoprodutosComponent
   ],
   imports: [
     CommonModule, 

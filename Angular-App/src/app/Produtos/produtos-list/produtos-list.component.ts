@@ -14,6 +14,7 @@ export class ProdutosListComponent implements OnInit {
 
   produtos: Produto[];
   tipoProduto: TipoProduto[];
+  tipoP: number;
 
   constructor(
     private produtoService: ProdutoService,
@@ -60,7 +61,8 @@ export class ProdutosListComponent implements OnInit {
         );
   }
   // Atualiza o produto
-  updateProduto(produto: Produto) {
+  updateProduto(produto: Produto, tipoP: number ) {
+    produto.tipoProdutoId = tipoP;
     this.produtoService.update(produto.produtoId, produto)
       .subscribe(
         res => {

@@ -12,20 +12,22 @@
             <div class="col-md-12" >
               <table class="table">
                 <thead class="thead-light">
-                <tr>
-                  <th scope="col">#</th>
+                <tr>                  
                   <th scope="col">Nome</th>
-                  <th scope="col">Data Cadastro</th>
                   <th scope="col">Preço</th>
+                  <th scope="col">Tipo Produto</th>
+                  <th scope="col">Descrição</th>                  
+                  <th scope="col">Data Cadastro</th>
                   <th>Opções</th>
                 </tr>
                 </thead>
                 <tbody *ngFor="let produto of produtos">
-                <tr>
-                  <td>{{produto.produtoId}}</td>
+                <tr>                  
                   <td>{{produto.nome | titlecase}}</td>
-                  <td>{{produto.dataCadastro | date: 'medium' }}</td>
                   <td>{{produto.preco | currency:'BRL':true}}</td>
+                  <td>{{produto.tipoNome}}</td>
+                  <td>{{produto.descricao}}</td>
+                  <td>{{produto.dataCadastro | date: 'medium' }}</td>
                   <td>
                     <button class="btn btn-warning btn-sm"
                             data-toggle="modal" [attr.data-target]="'#edit'+ produto.produtoId">Alterar</button>
@@ -49,8 +51,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-
-
+                        
                         <div>
                           <form #form="ngForm" autocomplete="off">
                             <div class="form-group">
@@ -69,25 +70,16 @@
 
                               <div class="form-group col-md-6">
                                 <label>Tipo do Produto</label>
-                              <!-- <input type="text" class="form-control" id="tipoProduto"
-                                       #tipoProduto="ngModel" required [(ngModel)]="produto.tipoNome" name="tipoProduto"/>
-                                <div class="validation-error" *ngIf="tipoProduto.invalid && tipoProduto.touched">Campo obrigatório.</div>
-                              -->
-                                <select class="form-control"                    
-                                  id="tipoProduto"
-                                  #tipoProduto="ngModel" 
-                                  required [(ngModel)]="produto.tipoProdutoId"
-                                  name="tipoProduto">                                  
-                                  
-                                  <option *ngFor="let item of tipoProduto"
-                                  [ngValue]="item.tipoProdutoId">                                  
-                                  
-                                  {{item.tipoNome}}</option>
-                                
+                                <select class="form-control"
+                                  id="tipo" #tipo="ngModel" 
+                                  required [(ngModel)]="tipoP"
+                                  name="tipo">  
+
+                                  <option *ngFor="let item of tipoProduto" 
+                                    [ngValue]="item.tipoProdutoId"> {{item.tipoNome}} </option>                              
                                 </select>
-                                <div class="validation-error" *ngIf="tipoProduto.invalid && tipoProduto.touched">Campo obrigatório.</div>
-                              
-                              
+                                <div class="validation-error" *ngIf="tipo.invalid && tipo.touched">Campo obrigatório.</div>                                                         
+
                               </div>
 
                               <div class="form-group col-md-6">
@@ -103,7 +95,7 @@
                       </div>
                       <div class="card-footer">
                         <button [disabled]="form.invalid" type="submit" class="btn btn-warning btn-block"
-                          (click)="updateProduto(produto)">
+                          (click)="updateProduto(produto, tipoP)">
                           Alterar Produto
                         </button>
                       </div>

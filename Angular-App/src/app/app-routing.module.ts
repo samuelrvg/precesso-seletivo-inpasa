@@ -1,3 +1,4 @@
+import { TipoprodutosComponent } from './Produtos/tipoprodutos/tipoprodutos.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -10,8 +11,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'produtos', pathMatch: 'full' },
   { path: 'produtos', component: ProdutosListComponent },
   { path: 'produtos/add', component: AddProdutoComponent },
-  { path: '**', component: ProdutosListComponent }
-
+  { path: '**', component: ProdutosListComponent },
+  { path: 'tipoprodutos', component: TipoprodutosComponent}
 ];
 
 @NgModule({

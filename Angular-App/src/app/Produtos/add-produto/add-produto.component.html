@@ -32,12 +32,10 @@
                     id="tipoProduto"
                     #tipoProdutoIdModel="ngModel" 
                     required [(ngModel)]="produto.tipoProdutoId"
-                    name="tipoProduto">
+                    name="tipoProduto">                    
                     
-                    <option selected>Choose...</option>
                     <option *ngFor="let item of tipoProduto"
-                    [ngValue]="item.tipoProdutoId">
-                    
+                    [ngValue]="item.tipoProdutoId">                    
                     
                     {{item.tipoNome}}</option>
                   
