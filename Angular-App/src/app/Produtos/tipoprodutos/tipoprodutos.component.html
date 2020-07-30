@@ -1,0 +1,56 @@
+<div class="container">     
+  <div class="col">
+  <br>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4" >
+
+      <table class="table table-sm">
+        <thead class="thead-light">
+        <tr>                  
+          <th class="text-center">Tipo Produto</th>
+          <th class="text-center">Remover</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let tipo of tipoProduto">
+          
+        <tr>                  
+          <td class="text-center">{{tipo.tipoNome | titlecase}}</td> 
+          <td class="text-center">                    
+            <button class="btn btn-danger btn-sm ml-2" (click)="remover(tipo.tipoProdutoId)">X</button>
+          </td>
+        </tr>             
+
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col-md-4" >
+        
+
+      <div class="form-group">
+
+        <form #form="ngForm" autocomplete="off">
+
+          <div class="form-group">
+            <label>TipoProduto Nome</label>
+            <input type="text" class="form-control" id="tipoProduto"
+                    #tipoProdutoModel="ngModel" required [(ngModel)]="tipoProdutoSave.tipoNome" name="tipoProduto"/>
+            <div class="validation-error" *ngIf="tipoProdutoModel.invalid && tipoProdutoModel.touched">Campo obrigatório.</div>
+          </div>
+
+          <button [disabled]="form.invalid" (click)="saveTipoProduto(tipoProdutoSave)" class="btn btn-success btn-block">Cadastrar</button>
+
+        </form>
+
+        <a class="btn btn-info btn-block mt-2" routerLink="/produtos/add">Voltar - Cadastrar Produto</a>
+      </div>
+
+    </div>
+  </div>
+
+
+  </div>
+</div>
+
+

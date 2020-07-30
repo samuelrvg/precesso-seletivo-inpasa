@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12"><br>
+      <div class="row text-center">
+        <a class="btn btn-success ml-5 mr-5" routerLink="/produtos/add">Adicionar Produtos</a>
+        <h4 class="text-center">Lista de Produtos</h4>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col">
+          <br>
+          <div class="row">
+            <div class="col-md-12" >
+              <table class="table">
+                <thead class="thead-light">
+                <tr>                  
+                  <th scope="col">Nome</th>
+                  <th scope="col">Preço</th>
+                  <th scope="col">Tipo Produto</th>
+                  <th scope="col">Descrição</th>                  
+                  <th scope="col">Data Cadastro</th>
+                  <th>Opções</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let produto of produtos">
+                <tr>                  
+                  <td>{{produto.nome | titlecase}}</td>
+                  <td>{{produto.preco | currency:'BRL':true}}</td>
+                  <td>{{produto.tipoNome}}</td>
+                  <td>{{produto.descricao}}</td>
+                  <td>{{produto.dataCadastro | date: 'medium' }}</td>
+                  <td>
+                    <button class="btn btn-warning btn-sm"
+                            data-toggle="modal" [attr.data-target]="'#edit'+ produto.produtoId">Alterar</button>
+                    <button class="btn btn-danger btn-sm ml-2"
+                            data-toggle="modal" [attr.data-target]="'#remove'+ produto.produtoId">Remover</button>
+                  </td>
+                </tr>
+
+                <!-- Modal Editar -->
+                <div class="modal fade" id="edit{{produto.produtoId}}"
+                     tabindex="-1" role="dialog"
+                     aria-labelledby="editLabel"
+                     aria-hidden="true">
+
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-center">Alterar Produto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        
+                        <div>
+                          <form #form="ngForm" autocomplete="off">
+                            <div class="form-group">
+                              <label>Nome</label>
+                              <input type="text" class="form-control" id="nome"
+                                     #nome="ngModel" required [(ngModel)]="produto.nome" name="nome"/>
+                              <div class="validation-error" *ngIf="nome.invalid && nome.touched">Campo obrigatório.</div>
+                            </div>
+                            <div class="form-group">
+                              <label>Descrição</label>
+                              <input type="text" class="form-control" id="descricao"
+                                     #descricao="ngModel" required [(ngModel)]="produto.descricao" name="descricao"/>
+                              <div class="validation-error" *ngIf="descricao.invalid && descricao.touched">Campo obrigatório.</div>
+                            </div>
+                            <div class="form-row">
+
+                              <div class="form-group col-md-6">
+                                <label>Tipo do Produto</label>
+                                <select class="form-control"
+                                  id="tipo" #tipo="ngModel" 
+                                  required [(ngModel)]="tipoP"
+                                  name="tipo">  
+
+                                  <option *ngFor="let item of tipoProduto" 
+                                    [ngValue]="item.tipoProdutoId"> {{item.tipoNome}} </option>                              
+                                </select>
+                                <div class="validation-error" *ngIf="tipo.invalid && tipo.touched">Campo obrigatório.</div>                                                         
+
+                              </div>
+
+                              <div class="form-group col-md-6">
+                                <label>Preço</label>
+                                <input currencyMask  type="text" class="form-control" id="preco"
+                                       #preco="ngModel" required [(ngModel)]="produto.preco" name="preco"
+                                       [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"/>
+                                <div class="validation-error" *ngIf="preco.invalid && preco.touched">Campo obrigatório.</div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <button [disabled]="form.invalid" type="submit" class="btn btn-warning btn-block"
+                          (click)="updateProduto(produto, tipoP)">
+                          Alterar Produto
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Modal Remover -->
+                <div class="modal fade" id="remove{{produto.produtoId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body text-center">
+                        <h5>Deseja remover o produto <strong>{{produto.nome | titlecase }}</strong> ?</h5>
+                      </div>
+                      <div class="modal-footer text-center">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Não</button>
+                        <button class="btn btn-danger ml-2 btn-sm" (click)="deleteProduto(produto.produtoId)">Sim</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
