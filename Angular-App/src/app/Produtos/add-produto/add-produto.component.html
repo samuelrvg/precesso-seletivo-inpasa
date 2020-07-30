@@ -24,25 +24,23 @@
               </div>
 
               <div class="form-row">
-
-                <div class="form-group col-md-6">
-                  <label>Tipo do Produto</label>                       
-                  
+                <div *ngIf="existeTipo" class="form-group col-md-6">
+                  <label>Tipo do Produto</label>
                   <select class="form-control"                    
                     id="tipoProduto"
                     #tipoProdutoIdModel="ngModel" 
                     required [(ngModel)]="produto.tipoProdutoId"
-                    name="tipoProduto">                    
-                    
+                    name="tipoProduto">
                     <option *ngFor="let item of tipoProduto"
-                    [ngValue]="item.tipoProdutoId">                    
-                    
-                    {{item.tipoNome}}</option>
-                  
+                    [ngValue]="item.tipoProdutoId">
+                    {{item.tipoNome}}</option>                  
                   </select>
                   <div class="validation-error" *ngIf="tipoProdutoIdModel.invalid && tipoProdutoIdModel.touched">Campo obrigatório.</div>
-        
+                </div>
 
+                <div *ngIf="existeTipo == false" class="form-group col-md-6">
+                  <label>Nenhum TipoProdutos cadastrado.</label>
+                  <a class="btn btn-warning btn-block" routerLink="/produtos/tipoprodutos">Cadastar Novo TipoProduto</a>
                 </div>
 
 
@@ -56,7 +54,7 @@
 
               </div>
 
-              <button [disabled]="form.invalid" (click)="saveProduto(produto)" class="btn btn-success btn-block">Cadastrar</button>
+              <button *ngIf="existeTipo" [disabled]="form.invalid" (click)="saveProduto(produto)" class="btn btn-success btn-block">Cadastrar</button>
 
             </form>
           </div>

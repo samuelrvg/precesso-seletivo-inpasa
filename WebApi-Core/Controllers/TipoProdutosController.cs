@@ -30,16 +30,16 @@ namespace WebApi_Core.Controllers
             return Ok(result);
         }
 
-       /* [HttpGet("{id}")]
-        public IEnumerable Get(int id)
+        [HttpGet("{id}")]
+        public ActionResult<IEnumerable> Get(int id)
         {
-            if (ExisteTipoProduto(id))
+            if (!ExisteTipoProduto(id))
             {
-                return conexao.Conexao(_configuration)
-                    .Query<TipoProduto>($"SELECT *  FROM TipoProdutos WHERE TipoProdutoId = {id}");
+                return NotFound();
             }
-            return "TipoProduto não existe!";
-        } */
+            var result = conexao.Conexao(_configuration).Get<TipoProduto>(id);
+            return Ok(result);
+        }
 
         [HttpPost]
         public ActionResult<TipoProduto> Create(TipoProduto tipoProduto)
@@ -47,7 +47,7 @@ namespace WebApi_Core.Controllers
             if (!ExisteTipoProdutoNome(tipoProduto.TipoNome))
             {
                 conexao.Conexao(_configuration).Insert(tipoProduto);
-                return CreatedAtAction("Get", new { id = tipoProduto.TipoProdutoId }, tipoProduto);
+                return Ok();
             }
             return NotFound("TipoProduto já Cadastrado.");
          }
@@ -55,25 +55,29 @@ namespace WebApi_Core.Controllers
         [HttpPut("{id}")]
         public ActionResult<TipoProduto> Update(int id, TipoProduto tipoProduto)
         {
-            if (id == tipoProduto.TipoProdutoId)
+            if (id != tipoProduto.TipoProdutoId)
             {
-                if (ExisteTipoProduto(id))
-                {
-                    if (!ExisteTipoProdutoNome(tipoProduto.TipoNome))
-                    {
-                        conexao.Conexao(_configuration).Update(tipoProduto);
-                        return Ok();
-                    }
-                    return NotFound("TipoProduto com esse nome já está cadastrado.");
-                }
+                return NotFound("Erro! TipoProduto não identificado.");
+            }            
+            if (!ExisteTipoProduto(id))
+            {
                 return NotFound("TipoProduto não existe.");
-            }
-            return NotFound("Erro! TipoProduto não identificado.");
+            }            
+            if (ExisteTipoProdutoNome(tipoProduto.TipoNome))
+            {
+                return NotFound("TipoProduto com esse nome já está cadastrado.");
+            }            
+            conexao.Conexao(_configuration).Update(tipoProduto);
+            return NoContent();            
         }
 
         [HttpDelete("{id}")]
         public ActionResult<TipoProduto> Delete(int id)
         {
+            if (TipoEmUso(id))
+            {
+                return BadRequest();
+            }
             if (ExisteTipoProduto(id))
             {
                 conexao.Conexao(_configuration).Delete(new TipoProduto { TipoProdutoId = id });
@@ -82,18 +86,20 @@ namespace WebApi_Core.Controllers
             return NotFound("TipoProduto não existe.");
         }
 
-
-        public bool ExisteTipoProduto(int id)
+        private bool ExisteTipoProduto(int id)
         {
             return _context.TipoProdutos.Any(x => x.TipoProdutoId == id);
         }
 
-        public bool ExisteTipoProdutoNome(string nome)
+        private bool ExisteTipoProdutoNome(string nome)
         {
             return _context.TipoProdutos.Any(x => x.TipoNome.ToUpper() == nome.ToUpper());
         }
 
-
+        private bool TipoEmUso(int id)
+        {
+            return _context.Produtos.Any(x => x.TipoProdutoId == id);
+        }
 
     }
 }

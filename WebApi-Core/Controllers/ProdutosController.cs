@@ -98,17 +98,17 @@ namespace WebApi_Core.Controllers
             return NotFound("Produto não existe.");
         }
 
-        public bool ExisteProduto(int id)
+        private bool ExisteProduto(int id)
         {
             return _context.Produtos.Any(x => x.ProdutoId == id);
         }
 
-        public bool ExisteTipoProduto(int id)
+        private bool ExisteTipoProduto(int id)
         {
             return _context.TipoProdutos.Any(x => x.TipoProdutoId == id);
         }
 
-        public bool ExisteProdutoNome(string nome)
+        private bool ExisteProdutoNome(string nome)
         {
             return _context.Produtos.Any(x => x.Nome.ToUpper() == nome.ToUpper());
         }

@@ -13,14 +13,8 @@ const BaseUrlTipo = 'http://localhost:59163/api/tipoprodutos';
 })
 export class ProdutoService { constructor(private http: HttpClient) { }
 
-
-
   getAll(): Observable<Produto[]> {
     return this.http.get<Produto[]>(BaseUrlProdutos);
-  }
-
-  getTipoProduto(): Observable<TipoProduto[]> {
-    return this.http.get<TipoProduto[]>(BaseUrlTipo);
   }
 
   get(id): Observable<Produto> {
@@ -37,4 +31,20 @@ export class ProdutoService { constructor(private http: HttpClient) { }
 
   delete(id: number): Observable<any> {
     return this.http.delete(`${BaseUrlProdutos}/${id}`);
-  }}
+  }
+
+  // Tipo Produto
+
+  getTipoProduto(): Observable<TipoProduto[]> {
+    return this.http.get<TipoProduto[]>(BaseUrlTipo);
+  }
+
+  createTipoProduto(tipoProduto: TipoProduto): Observable<TipoProduto> {
+    return this.http.post<TipoProduto>(BaseUrlTipo, tipoProduto);
+  }
+
+  deleteTipoProduto(id: number) {
+    return this.http.delete(`${BaseUrlTipo}/${id}`);
+  }
+
+}

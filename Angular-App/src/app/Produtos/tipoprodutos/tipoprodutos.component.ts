@@ -1,6 +1,7 @@
 import { ProdutoService } from 'src/app/services/produto.service';
 import { Component, OnInit } from '@angular/core';
 import { TipoProduto } from '../tipoProduto';
+import { Produto } from '../produto';
 
 @Component({
   selector: 'app-tipoprodutos',
@@ -8,7 +9,13 @@ import { TipoProduto } from '../tipoProduto';
   styleUrls: ['./tipoprodutos.component.css']
 })
 export class TipoprodutosComponent implements OnInit {
-  tipoProduto: TipoProduto[];  
+  
+  tipoEmUso: boolean;
+  produtos: Produto[];
+  tipoProduto: TipoProduto[];
+  tipoProdutoSave = {
+    tipoNome: ''
+  };  
 
   constructor(private produtoService: ProdutoService) { }
 
@@ -24,6 +31,39 @@ export class TipoprodutosComponent implements OnInit {
         },
       (err) => {console.log('err', err); }
       );
+  }
+
+  saveTipoProduto(tipoProdutoSave): void {   
+    this.produtoService.createTipoProduto(tipoProdutoSave)
+      .subscribe(
+        (res: TipoProduto) => {
+          console.log(res);          
+          location.href = 'produtos/tipoprodutos';
+        },
+        error => {
+          console.log(error);          
+          location.href = 'produtos';
+        });
+      }
+  
+  remover(id): void {
+    this.produtoService.deleteTipoProduto(id)
+      .subscribe(
+      res => {
+        console.log(res);
+        location.href = 'produtos/tipoprodutos';
+      },
+      (err: any) => 
+      { 
+        if (err.status == 400) {
+          sessionStorage.setItem('erro', 'TipoProduto não pode ser removido em uso!');
+          location.href = 'produtos';
+      } 
+        if (err.status == 200) {
+          console.log('err', err)
+          location.href = 'produtos/tipoprodutos';
+      }
+    });
   }
 
 }

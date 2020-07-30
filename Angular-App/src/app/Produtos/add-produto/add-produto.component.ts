@@ -10,6 +10,7 @@ import { TipoProduto } from '../tipoProduto';
 })
 export class AddProdutoComponent implements OnInit {
 
+  existeTipo: boolean = false;
   produto = {
     nome: '',
     descricao: '',
@@ -31,8 +32,10 @@ export class AddProdutoComponent implements OnInit {
     this.produtoService.getTipoProduto()
     .subscribe(
       (res: TipoProduto[]) => {
-        if (res) { this.tipoProduto = res; }
-        },
+        if (res.length) { 
+          this.tipoProduto = res;
+          this.existeTipo = true; 
+        }},
       (err) => {console.log('err', err); }
       );
   }
